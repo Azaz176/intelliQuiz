@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import ProgressBar from "@/components/progressBar";
 import { ChevronLeft, X } from "lucide-react";
 import ResultCard from "./ResultCard";
+import QuizSubmission from "./QuizSubmission"
 
 const questions = [
   {
@@ -163,6 +164,7 @@ export default function Home() {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [submitted, setSubmitted]= useState<boolean>(false)
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const handleNext = () => {
     if (!started) {
@@ -171,6 +173,9 @@ export default function Home() {
     }
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+    }else{
+        setSubmitted(true)
+        return;
     }
     setSelectedAnswer(null);
     setIsCorrect(null);
@@ -183,6 +188,17 @@ export default function Home() {
     }
     setIsCorrect(isCurrentCorrect);
   };
+
+  const scorePercentage:number=Math.round((score/questions.length)*100)
+  if(submitted){
+    return(
+        <QuizSubmission
+        score={score}
+        scorePercentage={scorePercentage}
+        totalQuestions={questions.length}
+        />
+    )
+  }
   return (
     <div className="flex flex-col flex-1">
       <div className="position-sticky top-0 z-10 shadow-md py-4 w-full">
@@ -216,11 +232,10 @@ export default function Home() {
                 return (
                   <Button
                     key={answer.id}
-                    variant={"neoOutline"}
+                    variant={variant}
                     size="xl"
-                    onClick={() => handleAnswer(answer)}
-                  >
-                    {answer.answerText}
+                    onClick={() => handleAnswer(answer)}><p className="whitespace-normal">{answer.answerText}</p>
+                    
                   </Button>
                 );
               })}
@@ -242,7 +257,7 @@ export default function Home() {
           size="lg"
           onClick={handleNext}
         >
-          {!started ? "Start" : "Next"}
+          {!started ? "Start" :(currentQuestion===questions.length-1)?'Submit': "Next"}
         </Button>
       </footer>
     </div>
