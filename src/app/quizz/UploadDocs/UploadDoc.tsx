@@ -5,13 +5,31 @@ import { Button } from "@/components/ui/button";
 const UploadDoc = () => {
   const [document, setDocument] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError]= useState<string>("")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(!document){
+      setError("Please upload the document first")
+      return 
+    }
     setIsLoading(true);
-    console.log(document);
+   
+    const formData= new FormData();
+    formData.append("pdf", document as Blob)
+    try {
+      const res= await fetch("/api/quizz/generate", {
+        method:"POST",
+        body:formData
+      })
+      if(res.status===200){
+        console.log("quiz generated successfully")
+      }
+    } catch (error) {
+      console.log('error while generating', error)
+    }
     // Add your submission logic here
-    setIsLoading(false); // Set to false after submission logic completes
+    setIsLoading(false); 
   };
 
   return (
@@ -32,6 +50,7 @@ const UploadDoc = () => {
             onChange={(e) => setDocument(e.target.files?.[0] || null)}
           />
         </label>
+        {error? <p className="text-red-500">{error}</p>:null}
         <Button size="lg" className="mt-2" type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Generate Quiz"}
         </Button>
