@@ -7,7 +7,7 @@ import ResultCard from "./ResultCard";
 import QuizzSubmission from "./QuizzSubmission";
 import { InferSelectModel } from "drizzle-orm";
 import { questionAnswers, questions as DbQuestions, quizzes } from "@/db/schema";
-import { saveSubmission } from "@/actions/saveSubmissions";
+// import { saveSubmission } from "@/actions/saveSubmissions";
 import { useRouter } from "next/navigation";
 
 type Answer = InferSelectModel<typeof questionAnswers>;
