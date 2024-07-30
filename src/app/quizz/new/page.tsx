@@ -5,7 +5,7 @@ import { Lock, Flame } from "lucide-react";
 import { getStripe } from "@/lib/stripe-client";
 import { useRouter } from "next/navigation";
 import { PRICE_ID } from "@/lib/utils";
-import UpgradePlan from "../UpgradePlan";
+// import UpgradePlan from "../UpgradePlan";
 import { redirect } from 'next/navigation'
 
 const page = async () => {
@@ -27,7 +27,8 @@ const page = async () => {
             <h2 className="text-3xl font-bold mb-4">What do you want to be quizzed about today?</h2>
             <UploadDoc />
           </> :
-          <UpgradePlan />
+          <p>hello there is correction</p>
+          //<UpgradePlan />
         }
       </main>
     </div>
