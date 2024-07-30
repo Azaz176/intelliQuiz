@@ -7,12 +7,13 @@ import getUserMetrics from "@/actions/getUserMetrics";
 import getHeatMapData from "@/actions/getHeatMapData";
 import MetricCard from "./metricCard";
 import SubmissionsHeatMap from "./heatMap";
-// import SubscribeBtn from "../billing/SubscribeBtn";
+import SubscribeBtn from "../billing/SubscribeBtn";
 import { PRICE_ID } from "@/lib/utils";
 
 const page = async () => {
   const session = await auth();
   const userId = session?.user?.id;
+
   if (!userId) {
     return (<p>User not found</p>)
   };
