@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Send the prompt to the AI model and get the response
-    const result = await chatSession.sendMessage(prompt);
+    const result:any = await chatSession.sendMessage(prompt);
 
     const generatedResponse = await result.response.text();
     console.log("Generated response:", generatedResponse); // Log the generated response
